@@ -38,4 +38,5 @@ function grid(id,ro,ch){document.getElementById(id).innerHTML=ro.map((r,i)=>{if(
  return`<div class="k" onclick="play('${r}','${ch[i]}')"><b>${c}</b><small>${ROMA[r]||r}</small></div>`}).join("")}
 function setS(s){S=s;bh.className=s?"":"on";bk.className=s?"on":"";grid("g1",BASIC,hb);grid("g2",DAK,hd);grid("g3",YO,hy)}
 setS(0);
-</script></body></html>
+</script><script src="../nav.js"></script>
+</body></html>

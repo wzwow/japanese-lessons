@@ -49,4 +49,5 @@ function listen(i){const R=window.SpeechRecognition||window.webkitSpeechRecognit
   const s=Math.round(100*Math.min(m,t.length)/t.length);
   o.innerHTML=`I heard: <b>${h}</b><br>`+(s>=70?`<span class="ok">Nice, that's about ${s}% of it. 🎉</span>`:`<span class="bad">Close, about ${s}%. Try the slow version and go again.</span>`)};
  r.onerror=e=>o.textContent="Mic error: "+e.error;r.start()}
-</script></body></html>
+</script><script src="../nav.js"></script>
+</body></html>
