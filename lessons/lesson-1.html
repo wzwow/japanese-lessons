@@ -1,0 +1,61 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 1 · First meetings with clients</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#f6f4ef;color:#222;max-width:760px;margin:0 auto;padding:32px 20px}
+h1{font-size:26px;margin:0 0 4px}p.sub{color:#666;margin:0 0 28px}
+.card{background:#fff;border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 2px 10px #0001}
+.jp{font-size:28px;font-weight:600}.ro{color:#b5452b;font-style:italic;margin:4px 0}.en{font-size:17px;margin-bottom:12px}
+.parts{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.part{background:#f1ede4;border-radius:10px;padding:8px 10px;text-align:center;cursor:pointer}
+.part b{display:block;font-size:18px}.part small{color:#666}
+.note{font-size:14px;color:#555;border-left:3px solid #e0c9a6;padding-left:10px;margin:10px 0}
+button{border:0;border-radius:999px;padding:10px 16px;margin:6px 6px 0 0;font-size:15px;cursor:pointer;background:#222;color:#fff}
+button.alt{background:#e9e4da;color:#222}.res{margin-top:10px;font-size:15px;min-height:20px}
+.ok{color:#2a7a3a}.bad{color:#b5452b}
+</style></head><body>
+<h1>Lesson 1: First meetings with clients</h1>
+<p class="sub">Tap a word to hear it. Press ▶ to hear the whole phrase, then press 🎤 and say it back. Works best in Chrome.</p>
+<div id="app"></div>
+<script>
+const LESSON="lesson-1";
+const P=[
+{jp:"こんにちは",ro:"Konnichiwa",en:"Hello.",
+ parts:[["こんにち","konnichi","today"],["は","wa","topic marker"]],
+ note:"A daytime greeting that works with anyone. The final は is written ha but pronounced wa."},
+{jp:"はじめまして",ro:"Hajimemashite",en:"Nice to meet you.",
+ parts:[["はじめ","hajime","first / beginning"],["まして","mashite","(polite form)"]],
+ note:"Say it only the first time you meet someone. It's often followed by your name and よろしくお願いします."},
+{jp:"ご覧ください",ro:"Goran kudasai",en:"Please take a look.",
+ parts:[["ご覧","goran","look (honorific)"],["ください","kudasai","please"]],
+ note:"A respectful way to show a client your work, for example when you share a mockup."},
+{jp:"フィードバックをお願いします",ro:"Fiidobakku o onegai shimasu",en:"Feedback, please.",
+ parts:[["フィードバック","fiidobakku","feedback"],["を","o","object marker"],["お願いします","onegai shimasu","please"]],
+ note:"フィードバック is borrowed from English, so it's written in katakana. お願いします turns any noun into a polite request."},
+{jp:"素敵ですね",ro:"Suteki desu ne",en:"That's lovely.",
+ parts:[["素敵","suteki","lovely / wonderful"],["です","desu","is (polite)"],["ね","ne","isn't it?"]],
+ note:"A warm compliment. The ね at the end invites agreement and softens the sentence."},
+{jp:"少々お待ちください",ro:"Shōshō omachi kudasai",en:"One moment, please.",
+ parts:[["少々","shōshō","a little"],["お待ち","omachi","waiting (polite)"],["ください","kudasai","please"]],
+ note:"It's a very polite way to ask someone to wait, common in meetings and on calls."},
+{jp:"ありがとうございます",ro:"Arigatō gozaimasu",en:"Thank you.",
+ parts:[["ありがとう","arigatō","thanks"],["ございます","gozaimasu","(polite)"]],
+ note:"Adding ございます makes the plain ありがとう polite enough for clients."},
+{jp:"また今度",ro:"Mata kondo",en:"Next time / See you.",
+ parts:[["また","mata","again"],["今度","kondo","next time"]],
+ note:"A casual way to say goodbye or put something off for later. Add お願いします to make it more polite."}];
+const A=(f)=>`audio/${LESSON}/${f}.mp3`;let cur;
+const speak=(t,r=.8)=>{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="ja-JP";u.rate=r;speechSynthesis.speak(u)};
+const play=(f,t,r)=>{if(cur){cur.pause();cur.currentTime=0}speechSynthesis.cancel();const a=new Audio(A(f));cur=a;let fb=false;const fall=()=>{if(!fb){fb=true;speak(t,r)}};a.onerror=fall;a.play().catch(fall)};
+const norm=s=>s.replace(/[？?、。！!\s]/g,"");
+document.getElementById("app").innerHTML=P.map((p,i)=>`<div class="card"><div class="jp">${i+1}. ${p.jp}</div><div class="ro">${p.ro}</div><div class="en">${p.en}</div>
+<div class="parts">${p.parts.map((x,j)=>`<div class="part" onclick="play('p${i}_w${j}',P[${i}].parts[${j}][0])"><b>${x[0]}</b>${x[1]}<br><small>${x[2]}</small></div>`).join("")}</div>
+<div class="note">${p.note}</div>
+<button onclick="play('p${i}',P[${i}].jp,.9)">▶ Play</button><button class="alt" onclick="play('p${i}_slow',P[${i}].jp,.5)">🐢 Slow</button><button class="alt" onclick="listen(${i})">🎤 Say it back</button>
+<div class="res" id="r${i}"></div></div>`).join("");
+function listen(i){const R=window.SpeechRecognition||window.webkitSpeechRecognition,o=document.getElementById("r"+i);
+ if(!R){o.textContent="Speech recognition isn't supported in this browser. Try Chrome.";return}
+ const r=new R();r.lang="ja-JP";o.textContent="Listening...";
+ r.onresult=e=>{const h=e.results[0][0].transcript,t=norm(P[i].jp);let m=0;for(const c of norm(h))if(t.includes(c))m++;
+  const s=Math.round(100*Math.min(m,t.length)/t.length);
+  o.innerHTML=`I heard: <b>${h}</b><br>`+(s>=70?`<span class="ok">Nice, that's about ${s}% of it. 🎉</span>`:`<span class="bad">Close, about ${s}%. Try the slow version and go again.</span>`)};
+ r.onerror=e=>o.textContent="Mic error: "+e.error;r.start()}
+</script></body></html>

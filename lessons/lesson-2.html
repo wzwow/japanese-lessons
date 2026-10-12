@@ -16,6 +16,7 @@ button.alt{background:#e9e4da;color:#222}.res{margin-top:10px;font-size:15px;min
 <p class="sub">Tap a word to hear it. Press ▶ to hear the whole phrase, then press 🎤 and say it back. Works best in Chrome.</p>
 <div id="app"></div>
 <script>
+const LESSON="lesson-2";
 const P=[
 {jp:"この部分を変更できますか？",ro:"Kono bubun o henkō dekimasu ka?",en:"Can this part be changed?",
  parts:[["この","kono","this"],["部分","bubun","part"],["を","o","object marker"],["変更","henkō","change"],["できます","dekimasu","can do"],["か","ka","question"]],
@@ -32,12 +33,14 @@ const P=[
 {jp:"ご確認をお願いします",ro:"Go-kakunin o onegai shimasu",en:"Please check and confirm.",
  parts:[["ご","go","honorific"],["確認","kakunin","confirmation"],["を","o","object marker"],["お願いします","onegai shimasu","please"]],
  note:"This is standard when you send a draft to a client. The ご makes it extra polite."}];
+const A=(f)=>`audio/${LESSON}/${f}.mp3`;let cur;
 const speak=(t,r=.8)=>{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="ja-JP";u.rate=r;speechSynthesis.speak(u)};
+const play=(f,t,r)=>{if(cur){cur.pause();cur.currentTime=0}speechSynthesis.cancel();const a=new Audio(A(f));cur=a;let fb=false;const fall=()=>{if(!fb){fb=true;speak(t,r)}};a.onerror=fall;a.play().catch(fall)};
 const norm=s=>s.replace(/[？?、。！!\s]/g,"");
 document.getElementById("app").innerHTML=P.map((p,i)=>`<div class="card"><div class="jp">${i+1}. ${p.jp}</div><div class="ro">${p.ro}</div><div class="en">${p.en}</div>
-<div class="parts">${p.parts.map(x=>`<div class="part" onclick="speak('${x[0]}')"><b>${x[0]}</b>${x[1]}<br><small>${x[2]}</small></div>`).join("")}</div>
+<div class="parts">${p.parts.map((x,j)=>`<div class="part" onclick="play('p${i}_w${j}',P[${i}].parts[${j}][0])"><b>${x[0]}</b>${x[1]}<br><small>${x[2]}</small></div>`).join("")}</div>
 <div class="note">${p.note}</div>
-<button onclick="speak(P[${i}].jp)">▶ Play</button><button class="alt" onclick="speak(P[${i}].jp,.5)">🐢 Slow</button><button class="alt" onclick="listen(${i})">🎤 Say it back</button>
+<button onclick="play('p${i}',P[${i}].jp,.9)">▶ Play</button><button class="alt" onclick="play('p${i}_slow',P[${i}].jp,.5)">🐢 Slow</button><button class="alt" onclick="listen(${i})">🎤 Say it back</button>
 <div class="res" id="r${i}"></div></div>`).join("");
 function listen(i){const R=window.SpeechRecognition||window.webkitSpeechRecognition,o=document.getElementById("r"+i);
  if(!R){o.textContent="Speech recognition isn't supported in this browser. Try Chrome.";return}
