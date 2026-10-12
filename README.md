@@ -3,8 +3,8 @@
 Interactive Japanese lessons (audio playback, slow mode, 🎤 say-it-back).
 
 ## Adding a new lesson
-1. Copy `lessons/lesson-3.html` to `lessons/lesson-N.html`, set `const LESSON="lesson-N"`, title, `<h1>`, and the `P` phrase array.
-2. Generate audio: `python3 make_audio.py lessons/lesson-N.html` (writes `lessons/audio/lesson-N/*.mp3`).
+1. Copy `lessons/lesson-3.html` to `lessons/lesson-N.html`, set `const LESSON="lesson-N"`, title, `<h1>`, and the `P` phrase array, and the `V` extra-vocabulary array (5-6 items, `[jp, romaji, en]`; shown in the right sidebar).
+2. Generate audio: `python3 make_audio.py lessons/lesson-N.html` (writes `lessons/audio/lesson-N/*.mp3`: phrases `pI*.mp3`, word parts `pI_wJ.mp3`, vocab `vK.mp3`).
 3. **Add one line to `NAV` in `nav.js`** (href relative to the repo root), and add a card to `index.html`.
 4. Bundle audio: from `lessons/` run `tar czf - audio/lesson-N | base64 -w 76 > ../audio-bundle.b64`, then push; the
    "Unpack audio" GitHub Action decodes it and commits the mp3s.
