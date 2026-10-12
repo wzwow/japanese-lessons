@@ -11,10 +11,14 @@ h1{font-size:26px;margin:0 0 4px}p.sub{color:#666;margin:0 0 28px}
 button{border:0;border-radius:999px;padding:10px 16px;margin:6px 6px 0 0;font-size:15px;cursor:pointer;background:#222;color:#fff}
 button.alt{background:#e9e4da;color:#222}.res{margin-top:10px;font-size:15px;min-height:20px}
 .ok{color:#2a7a3a}.bad{color:#b5452b}
+.vocab h2{font-size:17px;margin:0 0 10px}.vi{background:#f1ede4;border-radius:10px;padding:8px 10px;margin-bottom:8px;cursor:pointer}
+.vi:active{background:#e0c9a6}.vi b{font-size:19px}.vi .r{color:#b5452b;font-style:italic;font-size:13px}.vi small{display:block;color:#666;font-size:13px}
+@media(min-width:1200px){body{padding-right:260px!important;max-width:1280px!important}.vocab{position:fixed;top:24px;right:20px;width:220px;max-height:calc(100vh - 48px);overflow-y:auto;box-sizing:border-box;margin:0}}
 </style></head><body>
 <h1>Lesson 3: Everyday phrases</h1>
 <p class="sub">Tap a word to hear it. Press ▶ to hear the whole phrase, then press 🎤 and say it back. Works best in Chrome.</p>
 <div id="app"></div>
+<aside class="card vocab" id="vocab"></aside>
 <script>
 const LESSON="lesson-3";
 const P=[
@@ -36,6 +40,7 @@ const P=[
 {jp:"いただきます",ro:"Itadakimasu",en:"(said before eating)",
  parts:[["いただき","itadaki","humbly receive"],["ます","masu","(polite)"]],
  note:"Say it with your hands together before a meal. After eating, say ごちそうさまでした."}];
+const V=[["今日", "kyō", "today"], ["明日", "ashita", "tomorrow"], ["水", "mizu", "water"], ["コーヒー", "kōhii", "coffee"], ["駅", "eki", "station"], ["ご飯", "gohan", "meal / rice"]];
 const A=(f)=>`audio/${LESSON}/${f}.mp3`;let cur;
 const speak=(t,r=.8)=>{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="ja-JP";u.rate=r;speechSynthesis.speak(u)};
 const play=(f,t,r)=>{if(cur){cur.pause();cur.currentTime=0}speechSynthesis.cancel();const a=new Audio(A(f));cur=a;let fb=false;const fall=()=>{if(!fb){fb=true;speak(t,r)}};a.onerror=fall;a.play().catch(fall)};
@@ -45,6 +50,7 @@ document.getElementById("app").innerHTML=P.map((p,i)=>`<div class="card"><div cl
 <div class="note">${p.note}</div>
 <button onclick="play('p${i}',P[${i}].jp,.9)">▶ Play</button><button class="alt" onclick="play('p${i}_slow',P[${i}].jp,.5)">🐢 Slow</button><button class="alt" onclick="listen(${i})">🎤 Say it back</button>
 <div class="res" id="r${i}"></div></div>`).join("");
+document.getElementById("vocab").innerHTML='<h2>Extra vocabulary</h2>'+V.map((v,k)=>`<div class="vi" onclick="play('v${k}',V[${k}][0])"><b>${v[0]}</b> <span class="r">${v[1]}</span><small>${v[2]}</small></div>`).join("");
 function listen(i){const R=window.SpeechRecognition||window.webkitSpeechRecognition,o=document.getElementById("r"+i);
  if(!R){o.textContent="Speech recognition isn't supported in this browser. Try Chrome.";return}
  const r=new R();r.lang="ja-JP";o.textContent="Listening...";

@@ -3,7 +3,8 @@
 After generating audio, add the lesson to NAV in nav.js and a card in index.html (see README.md).
 Usage: python3 make_audio.py lesson-N.html  [--voice ja-JP-NanamiNeural] [--slow -35%]
 Reads `const P=[...]` from the page (needs node) and writes to audio/<lesson-name>/:
-  p{i}.mp3 (phrase, normal), p{i}_slow.mp3 (phrase, slow), p{i}_w{j}.mp3 (word part j).
+  p{i}.mp3 (phrase, normal), p{i}_slow.mp3 (phrase, slow), p{i}_w{j}.mp3 (word part j),
+  v{k}.mp3 (extra vocabulary item k from the optional `const V=[[jp, romaji, en], ...]`).
 i, j are 0-based indexes into P and P[i].parts.  Requires: pip install edge-tts gTTS  (edge-tts preferred; gTTS used if edge fails)
 """
 import argparse, asyncio, json, os, re, subprocess
@@ -13,7 +14,9 @@ from gtts import gTTS
 def load_phrases(html):
     s = open(html, encoding="utf-8").read()
     m = re.search(r"const P=(\[.*?\]);\s*\n", s, re.S)
-    return json.loads(subprocess.check_output(["node", "-e", f"console.log(JSON.stringify({m.group(1)}))"]))
+    v = re.search(r"const V=(\[.*?\]);\s*\n", s, re.S)  # optional extra vocabulary [[jp, romaji, en], ...]
+    js = lambda src: json.loads(subprocess.check_output(["node", "-e", f"console.log(JSON.stringify({src}))"]))
+    return js(m.group(1)), (js(v.group(1)) if v else [])
 
 EDGE_OK = True
 async def tts(text, path, voice, rate):
@@ -33,7 +36,9 @@ async def main():
     name = os.path.splitext(os.path.basename(a.html))[0]
     out = os.path.join(os.path.dirname(os.path.abspath(a.html)), "audio", name); os.makedirs(out, exist_ok=True)
     jobs = []
-    for i, p in enumerate(load_phrases(a.html)):
+    phrases, vocab = load_phrases(a.html)
+    jobs += [(w[0], f"v{k}.mp3", "-10%") for k, w in enumerate(vocab)]
+    for i, p in enumerate(phrases):
         jobs += [(p["jp"], f"p{i}.mp3", "+0%"), (p["jp"], f"p{i}_slow.mp3", a.slow)]
         jobs += [(w[0], f"p{i}_w{j}.mp3", "-10%") for j, w in enumerate(p["parts"])]
     for text, fn, rate in jobs:
