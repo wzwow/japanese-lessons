@@ -1,6 +1,7 @@
 // Shared sidebar nav. To add a lesson, add one line to NAV (href is relative to the repo root).
 const NAV = [
   { title: "Home", href: "index.html" },
+  { title: "Learning plan", href: "plan.html" },
   { title: "Kana chart", href: "lessons/kana.html" },
   { title: "Lesson 1: First meetings with clients", href: "lessons/lesson-1.html" },
   { title: "Lesson 2: Design review phrases", href: "lessons/lesson-2.html" },
