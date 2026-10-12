@@ -1,0 +1,41 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kana chart · Hiragana & Katakana</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#f6f4ef;color:#222;max-width:760px;margin:0 auto;padding:32px 20px}
+h1{font-size:26px;margin:0 0 4px}h2{font-size:19px;margin:0 0 12px}p.sub{color:#666;margin:0 0 20px}
+.card{background:#fff;border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 2px 10px #0001}
+.note{font-size:14px;color:#555;border-left:3px solid #e0c9a6;padding-left:10px;margin:10px 0}
+button{border:0;border-radius:999px;padding:10px 16px;margin:0 6px 16px 0;font-size:15px;cursor:pointer;background:#e9e4da;color:#222}
+button.on{background:#222;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.grid.c3{grid-template-columns:repeat(3,1fr)}
+.k{background:#f1ede4;border-radius:10px;padding:10px 4px;text-align:center;cursor:pointer;user-select:none}
+.k:active{background:#e0c9a6}.k b{display:block;font-size:30px;font-weight:600}.k small{color:#b5452b;font-style:italic}
+.k.e{background:none;cursor:default}a{color:#b5452b}
+</style></head><body>
+<p><a href="../index.html">← All lessons</a></p>
+<h1>Kana chart</h1>
+<p class="sub">Tap any character to hear it.</p>
+<div class="card"><div class="note"><b>How to read the chart:</b> Each row is a consonant (k, s, t…) and each column is a vowel: <b>a, i, u, e, o</b>. Read across the row, for example か き く け こ = ka ki ku ke ko. Hiragana is used for native words and grammar; katakana is used for foreign words such as フィードバック. Both sets make the same sounds. A blank cell means that sound isn't used.<br>Two small marks change the sound: ゛ (dakuten) makes k→g, s→z, t→d and h→b, and ゜ (handakuten) makes h→p. A small ゃ, ゅ or ょ after an i-column kana blends the two, for example き+ゃ = きゃ (kya).</div></div>
+<button id="bh" class="on" onclick="setS(0)">Hiragana</button><button id="bk" onclick="setS(1)">Katakana</button>
+<div class="card"><h2>Basic (gojūon)</h2><div class="grid" id="g1"></div></div>
+<div class="card"><h2>Dakuten &amp; handakuten</h2><div class="grid" id="g2"></div></div>
+<div class="card"><h2>Combinations (yōon)</h2><div class="grid c3" id="g3"></div></div>
+<script>
+const R=s=>s.split(" ").map(x=>x==="-"?null:x);
+const BASIC=R("a i u e o ka ki ku ke ko sa shi su se so ta chi tsu te to na ni nu ne no ha hi fu he ho ma mi mu me mo ya - yu - yo ra ri ru re ro wa - - - wo n - - - -");
+const DAK=R("ga gi gu ge go za ji zu ze zo da dji dzu de do ba bi bu be bo pa pi pu pe po");
+const YO=R("kya kyu kyo sha shu sho cha chu cho nya nyu nyo hya hyu hyo mya myu myo rya ryu ryo gya gyu gyo ja ju jo bya byu byo pya pyu pyo");
+const HB=[..."あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめも"],
+ hb=HB.concat(["や",null,"ゆ",null,"よ"],[..."らりるれろ"],["わ",null,null,null,"を"],["ん",null,null,null,null]);
+const hd=[..."がぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽ"];
+const hy="きゃ きゅ きょ しゃ しゅ しょ ちゃ ちゅ ちょ にゃ にゅ にょ ひゃ ひゅ ひょ みゃ みゅ みょ りゃ りゅ りょ ぎゃ ぎゅ ぎょ じゃ じゅ じょ びゃ びゅ びょ ぴゃ ぴゅ ぴょ".split(" ");
+const kata=s=>s&&[...s].map(c=>String.fromCharCode(c.charCodeAt(0)+96)).join("");
+const ROMA={dji:"ji",dzu:"zu"};// file names stay unique, display uses standard romaji
+let S=0,cur;
+const speak=t=>{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="ja-JP";u.rate=.8;speechSynthesis.speak(u)};
+function play(f,t){if(cur){cur.pause()}speechSynthesis.cancel();const a=new Audio(`audio/kana/${f}.mp3`);cur=a;let fb=0;const fall=()=>{if(!fb){fb=1;speak(t)}};a.onerror=fall;a.play().catch(fall)}
+function grid(id,ro,ch){document.getElementById(id).innerHTML=ro.map((r,i)=>{if(!r)return'<div class="k e"></div>';const c=S?kata(ch[i]):ch[i];
+ return`<div class="k" onclick="play('${r}','${ch[i]}')"><b>${c}</b><small>${ROMA[r]||r}</small></div>`}).join("")}
+function setS(s){S=s;bh.className=s?"":"on";bk.className=s?"on":"";grid("g1",BASIC,hb);grid("g2",DAK,hd);grid("g3",YO,hy)}
+setS(0);
+</script></body></html>
