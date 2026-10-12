@@ -2,14 +2,30 @@
 """Generate neural Japanese audio for a lesson page.
 After generating audio, add the lesson to NAV in nav.js and a card in index.html (see README.md).
 Usage: python3 make_audio.py lesson-N.html  [--voice ja-JP-NanamiNeural] [--slow -35%]
-Reads `const P=[...]` from the page (needs node) and writes to audio/<lesson-name>/:
+Template lessons (lesson 4+, built from lessons/_template.html) keep all data between /*DATA*/ and /*END DATA*/;
+older lessons (1-3) only have `const P=[...]` and `const V=[...]`. Needs node. Writes to audio/<lesson-name>/:
   p{i}.mp3 (phrase, normal), p{i}_slow.mp3 (phrase, slow), p{i}_w{j}.mp3 (word part j),
   v{k}.mp3 (extra vocabulary item k from the optional `const V=[[jp, romaji, en], ...]`).
-i, j are 0-based indexes into P and P[i].parts.  Requires: pip install edge-tts gTTS  (edge-tts preferred; gTTS used if edge fails)
+  Template lessons also get:
+  r{k}.mp3  warm-up item k (only when it has no `ref`; refs like "lesson-1:p1" reuse that lesson's mp3),
+  g{k}.mp3  grammar example k (G.examples),  d{k}.mp3  dialogue line k (D),
+  q{k}.mp3  quiz item k that has a `say` text (listen items and answer read-outs),  s{k}.mp3  speak-back target k (S).
+Any item's optional say-text (e.g. katakana for a Latin-letter name) is what gets spoken.
+i, j, k are 0-based indexes into P and P[i].parts.  Requires: pip install edge-tts gTTS  (edge-tts preferred; gTTS used if edge fails)
 """
 import argparse, asyncio, json, os, re, subprocess
 import edge_tts
 from gtts import gTTS
+
+def load_data(html):
+    """Return dict with P, V, WARM, G, D, Q, S (missing ones empty)."""
+    s = open(html, encoding="utf-8").read()
+    d = re.search(r"/\*DATA\*/(.*?)/\*END DATA\*/", s, re.S)
+    if d:
+        code = d.group(1) + "\nconsole.log(JSON.stringify({P,V,WARM,G,D,Q,S}))"
+        return json.loads(subprocess.check_output(["node", "-e", code]))
+    p, v = load_phrases(html)
+    return {"P": p, "V": v, "WARM": [], "G": None, "D": [], "Q": [], "S": []}
 
 def load_phrases(html):
     s = open(html, encoding="utf-8").read()
@@ -36,11 +52,19 @@ async def main():
     name = os.path.splitext(os.path.basename(a.html))[0]
     out = os.path.join(os.path.dirname(os.path.abspath(a.html)), "audio", name); os.makedirs(out, exist_ok=True)
     jobs = []
-    phrases, vocab = load_phrases(a.html)
-    jobs += [(w[0], f"v{k}.mp3", "-10%") for k, w in enumerate(vocab)]
-    for i, p in enumerate(phrases):
-        jobs += [(p["jp"], f"p{i}.mp3", "+0%"), (p["jp"], f"p{i}_slow.mp3", a.slow)]
-        jobs += [(w[0], f"p{i}_w{j}.mp3", "-10%") for j, w in enumerate(p["parts"])]
+    D = load_data(a.html)
+    say = lambda arr, i: arr[i] if len(arr) > i and arr[i] else arr[0]   # list items: optional say-text at index i
+    jobs += [(say(w, 3), f"v{k}.mp3", "-10%") for k, w in enumerate(D["V"])]
+    for i, p in enumerate(D["P"]):
+        t = p.get("say") or p["jp"]
+        jobs += [(t, f"p{i}.mp3", "+0%"), (t, f"p{i}_slow.mp3", a.slow)]
+        jobs += [(say(w, 3), f"p{i}_w{j}.mp3", "-10%") for j, w in enumerate(p["parts"])]
+    jobs += [(w.get("say") or w["jp"], f"r{k}.mp3", "+0%") for k, w in enumerate(D["WARM"]) if not w.get("ref")]
+    if D["G"]:
+        jobs += [(say(x, 3), f"g{k}.mp3", "+0%") for k, x in enumerate(D["G"]["examples"])]
+    jobs += [(say(x, 4) if len(x) > 4 else x[1], f"d{k}.mp3", "+0%") for k, x in enumerate(D["D"])]
+    jobs += [(q["say"], f"q{k}.mp3", "+0%") for k, q in enumerate(D["Q"]) if q.get("say")]
+    jobs += [(x.get("say") or x["jp"], f"s{k}.mp3", "+0%") for k, x in enumerate(D["S"])]
     for text, fn, rate in jobs:
         path = os.path.join(out, fn)
         if a.force or not os.path.exists(path):
