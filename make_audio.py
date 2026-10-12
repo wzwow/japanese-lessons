@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Generate neural Japanese audio for a lesson page.
+After generating audio, add the lesson to NAV in nav.js and a card in index.html (see README.md).
 Usage: python3 make_audio.py lesson-N.html  [--voice ja-JP-NanamiNeural] [--slow -35%]
 Reads `const P=[...]` from the page (needs node) and writes to audio/<lesson-name>/:
   p{i}.mp3 (phrase, normal), p{i}_slow.mp3 (phrase, slow), p{i}_w{j}.mp3 (word part j).
