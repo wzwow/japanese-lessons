@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 2 · Design review phrases</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#f6f4ef;color:#222;max-width:760px;margin:0 auto;padding:32px 20px}
+h1{font-size:26px;margin:0 0 4px}p.sub{color:#666;margin:0 0 28px}
+.card{background:#fff;border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 2px 10px #0001}
+.jp{font-size:28px;font-weight:600}.ro{color:#b5452b;font-style:italic;margin:4px 0}.en{font-size:17px;margin-bottom:12px}
+.parts{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.part{background:#f1ede4;border-radius:10px;padding:8px 10px;text-align:center;cursor:pointer}
+.part b{display:block;font-size:18px}.part small{color:#666}
+.note{font-size:14px;color:#555;border-left:3px solid #e0c9a6;padding-left:10px;margin:10px 0}
+button{border:0;border-radius:999px;padding:10px 16px;margin:6px 6px 0 0;font-size:15px;cursor:pointer;background:#222;color:#fff}
+button.alt{background:#e9e4da;color:#222}.res{margin-top:10px;font-size:15px;min-height:20px}
+.ok{color:#2a7a3a}.bad{color:#b5452b}
+</style></head><body>
+<h1>Lesson 2: Design review phrases</h1>
+<p class="sub">Tap a word to hear it. Press ▶ to hear the whole phrase, then press 🎤 and say it back. Works best in Chrome.</p>
+<div id="app"></div>
+<script>
+const P=[
+{jp:"この部分を変更できますか？",ro:"Kono bubun o henkō dekimasu ka?",en:"Can this part be changed?",
+ parts:[["この","kono","this"],["部分","bubun","part"],["を","o","object marker"],["変更","henkō","change"],["できます","dekimasu","can do"],["か","ka","question"]],
+ note:"It's polite and soft, so it works well for asking clients or teammates for a change."},
+{jp:"この方向で進めましょう",ro:"Kono hōkō de susumemashō",en:"Let's go with this direction.",
+ parts:[["この","kono","this"],["方向","hōkō","direction"],["で","de","with / by"],["進めましょう","susumemashō","let's proceed"]],
+ note:"Use it to agree on a design direction. The ending ~ましょう means \"let's.\""},
+{jp:"修正しておきます",ro:"Shūsei shite okimasu",en:"I'll make the revisions.",
+ parts:[["修正","shūsei","revision"],["して","shite","doing"],["おきます","okimasu","(do in advance)"]],
+ note:"The ~ておきます ending means \"I'll get it done ahead of time.\" It sounds reliable and professional."},
+{jp:"もう少し大きくできますか？",ro:"Mō sukoshi ōkiku dekimasu ka?",en:"Could you make it a bit bigger?",
+ parts:[["もう少し","mō sukoshi","a little more"],["大きく","ōkiku","bigger"],["できますか","dekimasu ka","can you?"]],
+ note:"Swap 大きく for 小さく (chiisaku, smaller) or 明るく (akaruku, brighter)."},
+{jp:"ご確認をお願いします",ro:"Go-kakunin o onegai shimasu",en:"Please check and confirm.",
+ parts:[["ご","go","honorific"],["確認","kakunin","confirmation"],["を","o","object marker"],["お願いします","onegai shimasu","please"]],
+ note:"This is standard when you send a draft to a client. The ご makes it extra polite."}];
+const speak=(t,r=.8)=>{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="ja-JP";u.rate=r;speechSynthesis.speak(u)};
+const norm=s=>s.replace(/[？?、。！!\s]/g,"");
+document.getElementById("app").innerHTML=P.map((p,i)=>`<div class="card"><div class="jp">${i+1}. ${p.jp}</div><div class="ro">${p.ro}</div><div class="en">${p.en}</div>
+<div class="parts">${p.parts.map(x=>`<div class="part" onclick="speak('${x[0]}')"><b>${x[0]}</b>${x[1]}<br><small>${x[2]}</small></div>`).join("")}</div>
+<div class="note">${p.note}</div>
+<button onclick="speak(P[${i}].jp)">▶ Play</button><button class="alt" onclick="speak(P[${i}].jp,.5)">🐢 Slow</button><button class="alt" onclick="listen(${i})">🎤 Say it back</button>
+<div class="res" id="r${i}"></div></div>`).join("");
+function listen(i){const R=window.SpeechRecognition||window.webkitSpeechRecognition,o=document.getElementById("r"+i);
+ if(!R){o.textContent="Speech recognition isn't supported in this browser. Try Chrome.";return}
+ const r=new R();r.lang="ja-JP";o.textContent="Listening...";
+ r.onresult=e=>{const h=e.results[0][0].transcript,t=norm(P[i].jp);let m=0;for(const c of norm(h))if(t.includes(c))m++;
+  const s=Math.round(100*Math.min(m,t.length)/t.length);
+  o.innerHTML=`I heard: <b>${h}</b><br>`+(s>=70?`<span class="ok">Nice, that's about ${s}% of it. 🎉</span>`:`<span class="bad">Close, about ${s}%. Try the slow version and go again.</span>`)};
+ r.onerror=e=>o.textContent="Mic error: "+e.error;r.start()}
+</script></body></html>
