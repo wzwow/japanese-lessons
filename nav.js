@@ -7,6 +7,7 @@ const NAV = [
   { title: "Lesson 2: Design review phrases", href: "lessons/lesson-2.html" },
   { title: "Lesson 3: Everyday phrases", href: "lessons/lesson-3.html" },
   { title: "Lesson 4: Self-introduction", href: "lessons/lesson-4.html" },
+  { title: "Lesson 5: Business cards & polite phrases", href: "lessons/lesson-5.html" },
 ];
 (function () {
   const base = new URL(".", document.currentScript.src); // repo root, wherever it's hosted
