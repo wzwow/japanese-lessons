@@ -50,7 +50,7 @@ body.noro .dl .ro{display:none}body.noen .dl .den{display:none}
 const LESSON = "lesson-4";
 const TITLE = "Lesson 4: Self-introduction";
 const SUB = "Introduce yourself to a new client: your name, where you're from, and what you do.";
-const META = {stage:1, week:1, lesson:4, total:42, review:false, next:"lesson-5.html", nextTitle:"Lesson 5: Business cards & polite set phrases"};
+const META = {stage:1, week:1, lesson:4, total:42, review:false, prev:"lesson-3.html", prevTitle:"Lesson 3", next:"lesson-5.html", nextTitle:"Lesson 5: Business cards & polite set phrases"};
 const WARM = [
   {ref:"lesson-3:p4", jp:"お疲れ様です", ro:"Otsukaresama desu", en:"Thanks for your hard work (coworker greeting)."},
   {ref:"lesson-1:p1", jp:"はじめまして", ro:"Hajimemashite", en:"Nice to meet you."},
@@ -61,12 +61,12 @@ const P = [
   {jp:"私はデザイナーです。", ro:"Watashi wa dezainā desu.", en:"I'm a designer.",
    parts:[["私","watashi","I"],["は","wa","topic marker","わ"],["デザイナー","dezainā","designer"],["です","desu","am / is (polite)"]],
    note:"This is the core self-introduction pattern. Once the context is clear, Japanese often drops 私は and just says デザイナーです."},
-  {jp:"シンガポールから来ました。", ro:"Shingapōru kara kimashita.", en:"I'm from Singapore.",
-   parts:[["シンガポール","Shingapōru","Singapore"],["から","kara","from"],["来ました","kimashita","came"]],
-   note:"Literally \"I came from Singapore.\" It's the natural way to say where you're from when meeting someone, whether in Japan or online."},
-  {jp:"LunarPulse と申します。", ro:"LunarPulse to mōshimasu.", en:"My name is LunarPulse. (humble)", say:"ルナパルスと申します。",
-   parts:[["LunarPulse","LunarPulse","your name","ルナパルス"],["と","to","(quoting)"],["申します","mōshimasu","am called (humble)"]],
-   note:"申します is the humble form of 言います (to be called). It's the safe choice with clients. Never add さん to your own name."},
+  {jp:"アメリカから来ました。", ro:"Amerika kara kimashita.", en:"I'm from the United States.",
+   parts:[["アメリカ","Amerika","the United States (example)"],["から","kara","from"],["来ました","kimashita","came"]],
+   note:"Literally \"I came from the United States.\" Swap in your own country: イギリス (UK), オーストラリア (Australia), 中国 (China), インド (India)…. It's the natural way to say where you're from, whether you meet in Japan or online."},
+  {jp:"スミスと申します。", ro:"Sumisu to mōshimasu.", en:"My name is Smith. (humble)",
+   parts:[["スミス","Sumisu","Smith (sample name: use yours)"],["と","to","(quoting)"],["申します","mōshimasu","am called (humble)"]],
+   note:"申します is the humble form of 言います (to be called), the safe choice with clients. Replace スミス with [your name], and never add さん to it."},
   {jp:"どうぞよろしくお願いします。", ro:"Dōzo yoroshiku onegai shimasu.", en:"Nice to meet you / I look forward to working with you.",
    parts:[["どうぞ","dōzo","please / kindly"],["よろしく","yoroshiku","favorably"],["お願いします","onegai shimasu","I ask (polite)"]],
    note:"This closes every self-introduction. There's no exact English equivalent: it asks the other person to treat you kindly in your future work together. A slight bow fits well."},
@@ -78,26 +78,26 @@ const V = [["名前","namae","name"],["ディレクター","direkutā","director
 const G = {pattern:"X は Y です",
   explain:"は marks the topic: \"As for X…\". It's written with the kana は (ha) but pronounced <b>wa</b>. です ends the sentence politely, like \"is / am / are.\" Japanese has no a/an/the and no plural, so デザイナーです covers \"I'm a designer.\"",
   examples:[["山田さんはディレクターです。","Yamada-san wa direkutā desu.","Yamada-san is a director."],["これは名刺です。","Kore wa meishi desu.","This is a business card."],["田中さんはエンジニアです。","Tanaka-san wa enjinia desu.","Tanaka-san is an engineer."]],
-  mistake:"Adding さん to your own name. ✗ LunarPulseさんです → ✓ LunarPulseです / LunarPulseと申します. Use さん only for other people."};
+  mistake:"Reading は as \"ha.\" When は marks the topic, it's always pronounced <b>wa</b>: ✗ watashi ha → ✓ watashi wa."};
 const DTITLE = "First video call with a new client, Yamada-san from a Tokyo agency.";
 const D = [
   ["Client","はじめまして。山田と申します。","Hajimemashite. Yamada to mōshimasu.","Nice to meet you. My name is Yamada."],
-  ["you","はじめまして。LunarPulse と申します。デザイナーです。","Hajimemashite. LunarPulse to mōshimasu. Dezainā desu.","Nice to meet you. My name is LunarPulse. I'm a designer.","はじめまして。ルナパルスと申します。デザイナーです。"],
-  ["Client","シンガポールからですか。","Shingapōru kara desu ka.","Are you from Singapore?"],
-  ["you","はい、シンガポールから来ました。どうぞよろしくお願いします。","Hai, Shingapōru kara kimashita. Dōzo yoroshiku onegai shimasu.","Yes, I'm from Singapore. I look forward to working with you."],
+  ["you","はじめまして。スミスと申します。デザイナーです。","Hajimemashite. Sumisu to mōshimasu. Dezainā desu.","Nice to meet you. My name is Smith. I'm a designer."],
+  ["Client","アメリカからですか。","Amerika kara desu ka.","Are you from the United States?"],
+  ["you","はい、アメリカから来ました。どうぞよろしくお願いします。","Hai, Amerika kara kimashita. Dōzo yoroshiku onegai shimasu.","Yes, I'm from the United States. I look forward to working with you."],
   ["Client","こちらこそ、よろしくお願いします。","Kochira koso, yoroshiku onegai shimasu.","Likewise, I look forward to working with you."],
 ];
 const Q = [
-  {type:"listen", prompt:"Listen. What does it mean?", say:"私はデザイナーです。", choices:["I'm a designer.","I'm from Singapore.","Nice to meet you.","I'm an engineer."], answer:0},
-  {type:"choose", prompt:"How do you say \"I'm from Singapore.\"?", choices:["シンガポールです。","シンガポールから来ました。","シンガポールへ行きます。"], answer:1, say:"シンガポールから来ました。"},
+  {type:"listen", prompt:"Listen. What does it mean?", say:"私はデザイナーです。", choices:["I'm a designer.","I'm from the United States.","Nice to meet you.","I'm an engineer."], answer:0},
+  {type:"choose", prompt:"How do you say \"I'm from the United States.\"?", choices:["アメリカです。","アメリカから来ました。","アメリカへ行きます。"], answer:1, say:"アメリカから来ました。"},
   {type:"particle", prompt:"Fill in the particle: 山田さん ___ ディレクターです。", choices:["は","を","か"], answer:0, explain:"は marks the topic and is pronounced wa."},
   {type:"listen", prompt:"Listen. What does it mean?", say:"こちらこそ、よろしくお願いします。", choices:["See you next time.","Likewise, I look forward to working with you.","Please check it.","One moment, please."], answer:1},
   {type:"order", prompt:"Put the words in order: \"My name is Yamada.\" (humble)", tiles:["山田","と","申します"], answer:"山田と申します", say:"山田と申します。"},
 ];
 const S = [
   {prompt:"Tell the client you're a designer.", jp:"私はデザイナーです。", ro:"Watashi wa dezainā desu."},
-  {prompt:"Say that you're from Singapore.", jp:"シンガポールから来ました。", ro:"Shingapōru kara kimashita."},
-  {prompt:"Give your name humbly, then close the introduction politely.", jp:"LunarPulse と申します。どうぞよろしくお願いします。", ro:"LunarPulse to mōshimasu. Dōzo yoroshiku onegai shimasu.", say:"ルナパルスと申します。どうぞよろしくお願いします。"},
+  {prompt:"Say where you're from (the United States, or your own country).", jp:"アメリカから来ました。", ro:"Amerika kara kimashita."},
+  {prompt:"Give your name humbly (the sample name スミス, or your own), then close the introduction politely.", jp:"スミスと申します。どうぞよろしくお願いします。", ro:"Sumisu to mōshimasu. Dōzo yoroshiku onegai shimasu."},
 ];
 /*END DATA*/
 // ---------- engine (shared by every lesson; edit data above, not below) ----------
@@ -170,7 +170,7 @@ function speakback(){if(!S.length)return"";return `<h2 class="sh">⑥ Speak-back
 <div class="res" id="sr${k}"></div><div class="hid" id="sa${k}"><b style="font-size:19px">${s.jp}</b> <button class="alt sm" onclick="play('s${k}',sayOf(S[${k}]))">▶</button><div class="ro">${s.ro}</div></div></div>`).join("")}</div>`}
 function sbShow(k){$("sa"+k).classList.remove("hid")}
 function finish(){const done=(store("jl-done")||[]).includes(LESSON);return `<div class="card fin"><button id="bdone" onclick="markDone()">${done?"✅ Lesson complete":"Mark lesson complete"}</button>
-${META.next?`<p><a href="${META.next}">Next: ${META.nextTitle||"tomorrow's lesson"} →</a></p>`:"<p class='muted'>The next lesson is coming soon.</p>"}</div>`}
+<p>${META.prev?`<a href="${META.prev}">← ${META.prevTitle||"Previous lesson"}</a>`:""}${META.prev&&META.next?" &nbsp;·&nbsp; ":""}${META.next?`<a href="${META.next}">Next: ${META.nextTitle||"tomorrow's lesson"} →</a>`:"<span class='muted'>The next lesson is coming soon.</span>"}</p></div>`}
 function markDone(){const d=store("jl-done")||[];if(!d.includes(LESSON))d.push(LESSON);store("jl-done",d);$("bdone").textContent="✅ Lesson complete";
  $("donec").textContent=`${d.length} lesson${d.length===1?"":"s"} marked complete · this one is done ✅`}
 function vocab(){if(!V.length){$("vocab").remove();return}

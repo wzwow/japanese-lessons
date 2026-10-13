@@ -24,9 +24,11 @@ Lessons from 4 onward follow `plan.html` and are built from `lessons/_template.h
    - `WARM` (3–4 warm-up phrases): earlier phrases from 1, 3, 7, 14 and 30 days back. Use `ref:"lesson-X:pI"` to reuse that lesson's mp3.
    - `Q` (4–5 quiz items): mix `listen`, `choose`, `particle` and `order` ("Lesson page design" ⑦).
    - `S` (3 speak-back prompts): English prompt plus target Japanese ("Lesson page design" ⑧).
-   - For Latin-letter names (e.g. LunarPulse), add a katakana `say` text so the audio reads correctly. Add `"わ"` as the say-text for the particle は.
+   - For any word written in Latin letters, add a katakana `say` text so the audio reads correctly. Add `"わ"` as the say-text for the particle は.
 3. `python3 make_audio.py lessons/lesson-N.html` generates `p*, v*, r*, g*, d*, q*, s*` mp3s in `lessons/audio/lesson-N/`.
 4. Add the lesson to `NAV` in `nav.js`, add a card in `index.html`, set the previous lesson's `META.next`, and bump `DONE` and the "Done / Next up" text in `plan.html`.
 5. Bundle and push the new audio (see above).
 
 Progress (completed lessons, quiz best scores, warm-up 😊/😐/😕 ratings) is saved in the browser's `localStorage`, so no backend is needed.
+
+**No personalization:** lesson content uses generic sample names (田中, 山田, スミス) and an example country (アメリカ) rather than any real learner's name or location. Notes tell learners to swap in their own.
