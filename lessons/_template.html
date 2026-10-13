@@ -52,12 +52,12 @@ const LESSON = "lesson-N";            // file name without .html; audio lives in
 const TITLE = "Lesson N: Title";
 const SUB = "One-line description of today's theme.";
 // stage/week/lesson from plan.html (week n = lessons 7n-6..7n). review:true on lessons 7,14,21… (warm-up + quiz only).
-const META = {stage:1, week:1, lesson:0, total:42, review:false, next:"lesson-N+1.html", nextTitle:"Lesson N+1"};
+const META = {stage:1, week:1, lesson:0, total:42, review:false, prev:"lesson-N-1.html", prevTitle:"Lesson N-1", next:"lesson-N+1.html", nextTitle:"Lesson N+1"};
 // Warm-up: 3-4 earlier phrases. ref "lesson-X:pI" reuses that lesson's mp3; omit ref to generate rK.mp3.
 const WARM = [
   {ref:"lesson-1:p1", jp:"はじめまして", ro:"Hajimemashite", en:"Nice to meet you."},
 ];
-// New phrases (4-5). parts: [jp, romaji, english, optional say-text for audio]. say: optional audio text (e.g. katakana for a Latin name).
+// New phrases (4-5). parts: [jp, romaji, english, optional say-text for audio]. say: optional audio text (e.g. katakana for a name written in Latin letters).
 const P = [
   {jp:"こんにちは", ro:"Konnichiwa", en:"Hello.", parts:[["こんにち","konnichi","today"],["は","wa","topic marker"]], note:"When and to whom you'd say it."},
 ];
@@ -147,7 +147,7 @@ function speakback(){if(!S.length)return"";return `<h2 class="sh">⑥ Speak-back
 <div class="res" id="sr${k}"></div><div class="hid" id="sa${k}"><b style="font-size:19px">${s.jp}</b> <button class="alt sm" onclick="play('s${k}',sayOf(S[${k}]))">▶</button><div class="ro">${s.ro}</div></div></div>`).join("")}</div>`}
 function sbShow(k){$("sa"+k).classList.remove("hid")}
 function finish(){const done=(store("jl-done")||[]).includes(LESSON);return `<div class="card fin"><button id="bdone" onclick="markDone()">${done?"✅ Lesson complete":"Mark lesson complete"}</button>
-${META.next?`<p><a href="${META.next}">Next: ${META.nextTitle||"tomorrow's lesson"} →</a></p>`:"<p class='muted'>The next lesson is coming soon.</p>"}</div>`}
+<p>${META.prev?`<a href="${META.prev}">← ${META.prevTitle||"Previous lesson"}</a>`:""}${META.prev&&META.next?" &nbsp;·&nbsp; ":""}${META.next?`<a href="${META.next}">Next: ${META.nextTitle||"tomorrow's lesson"} →</a>`:"<span class='muted'>The next lesson is coming soon.</span>"}</p></div>`}
 function markDone(){const d=store("jl-done")||[];if(!d.includes(LESSON))d.push(LESSON);store("jl-done",d);$("bdone").textContent="✅ Lesson complete";
  $("donec").textContent=`${d.length} lesson${d.length===1?"":"s"} marked complete · this one is done ✅`}
 function vocab(){if(!V.length){$("vocab").remove();return}
