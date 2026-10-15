@@ -9,6 +9,7 @@ const NAV = [
   { title: "Lesson 4: Self-introduction", href: "lessons/lesson-4.html" },
   { title: "Lesson 5: Business cards & polite phrases", href: "lessons/lesson-5.html" },
   { title: "Lesson 6: Names & さん", href: "lessons/lesson-6.html" },
+  { title: "Lesson 7: Week 1 review", href: "lessons/lesson-7.html" },
 ];
 (function () {
   const base = new URL(".", document.currentScript.src); // repo root, wherever it's hosted
