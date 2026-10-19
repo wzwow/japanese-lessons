@@ -11,6 +11,7 @@ const NAV = [
   { title: "Lesson 6: Names & さん", href: "lessons/lesson-6.html" },
   { title: "Lesson 7: Week 1 review", href: "lessons/lesson-7.html" },
   { title: "Lesson 8: Talking about your work", href: "lessons/lesson-8.html" },
+  { title: "Lesson 9: Me too — also with も", href: "lessons/lesson-9.html" },
 ];
 (function () {
   const base = new URL(".", document.currentScript.src); // repo root, wherever it's hosted
