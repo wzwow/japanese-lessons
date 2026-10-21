@@ -13,6 +13,7 @@ const NAV = [
   { title: "Lesson 8: Talking about your work", href: "lessons/lesson-8.html" },
   { title: "Lesson 9: Me too — also with も", href: "lessons/lesson-9.html" },
   { title: "Lesson 10: Asking “what?” with 何", href: "lessons/lesson-10.html" },
+  { title: "Lesson 11: Your company & role with の", href: "lessons/lesson-11.html" },
 ];
 (function () {
   const base = new URL(".", document.currentScript.src); // repo root, wherever it's hosted
