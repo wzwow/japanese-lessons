@@ -15,6 +15,7 @@ const NAV = [
   { title: "Lesson 10: Asking “what?” with 何", href: "lessons/lesson-10.html" },
   { title: "Lesson 11: Your company & role with の", href: "lessons/lesson-11.html" },
   { title: "Lesson 12: Whose is it? 誰の", href: "lessons/lesson-12.html" },
+  { title: "Lesson 13: Who's in charge?", href: "lessons/lesson-13.html" },
 ];
 (function () {
   const base = new URL(".", document.currentScript.src); // repo root, wherever it's hosted
