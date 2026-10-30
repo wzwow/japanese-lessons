@@ -20,6 +20,7 @@ const NAV = [
   { title: "Lesson 15: Pointing — これ / それ / あれ", href: "lessons/lesson-15.html" },
   { title: "Lesson 16: この / その / あの / どの + noun", href: "lessons/lesson-16.html" },
   { title: "Lesson 17: Negatives — じゃありません", href: "lessons/lesson-17.html" },
+  { title: "Lesson 18: Yes/no answers — そうです / そうじゃありません", href: "lessons/lesson-18.html" },
 ];
 (function () {
   const base = new URL(".", document.currentScript.src); // repo root, wherever it's hosted
