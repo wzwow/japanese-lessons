@@ -24,6 +24,7 @@ const NAV = [
   { title: "Lesson 19: Place words — ここ / そこ / あそこ / どこ", href: "lessons/lesson-19.html" },
   { title: "Lesson 20: Polite direction words — こちら / そちら / あちら / どちら", href: "lessons/lesson-20.html" },
   { title: "Lesson 21: Week 3 review", href: "lessons/lesson-21.html" },
+  { title: "Lesson 22: What time is it? — numbers 1–10 and 〜時", href: "lessons/lesson-22.html" },
 ];
 (function () {
   const base = new URL(".", document.currentScript.src); // repo root, wherever it's hosted
