@@ -26,6 +26,7 @@ const NAV = [
   { title: "Lesson 21: Week 3 review", href: "lessons/lesson-21.html" },
   { title: "Lesson 22: What time is it? — numbers 1–10 and 〜時", href: "lessons/lesson-22.html" },
   { title: "Lesson 23: From … to … — minutes and 〜から〜まで", href: "lessons/lesson-23.html" },
+  { title: "Lesson 24: Which day? — days of the week and time + に", href: "lessons/lesson-24.html" },
 ];
 (function () {
   const base = new URL(".", document.currentScript.src); // repo root, wherever it's hosted
