@@ -29,6 +29,7 @@ const NAV = [
   { title: "Lesson 24: Which day? — days of the week and time + に", href: "lessons/lesson-24.html" },
   { title: "Lesson 25: How much? — 百, 千, 万 and prices", href: "lessons/lesson-25.html" },
   { title: "Lesson 26: What's the date? — months, days and 何月何日", href: "lessons/lesson-26.html" },
+  { title: "Lesson 27: How long? — 〜時間, 〜週間 and どのくらい", href: "lessons/lesson-27.html" },
 ];
 (function () {
   const base = new URL(".", document.currentScript.src); // repo root, wherever it's hosted
