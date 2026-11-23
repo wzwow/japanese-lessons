@@ -1,0 +1,191 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 34: What did you do? — telling the story of your day</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#f6f4ef;color:#222;max-width:760px;margin:0 auto;padding:32px 20px;line-height:1.45}
+h1{font-size:26px;margin:0 0 4px}p.sub{color:#666;margin:0 0 20px}h2.sh{font-size:20px;margin:30px 0 4px}p.shd{color:#666;margin:0 0 12px;font-size:14px}
+.card{background:#fff;border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 2px 10px #0001}
+.jp{font-size:28px;font-weight:600}.ro{color:#b5452b;font-style:italic;margin:4px 0}.en{font-size:17px;margin-bottom:12px}
+.parts{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.part{background:#f1ede4;border-radius:10px;padding:8px 10px;text-align:center;cursor:pointer}
+.part b{display:block;font-size:18px}.part small{color:#666}
+.note{font-size:14px;color:#555;border-left:3px solid #e0c9a6;padding-left:10px;margin:10px 0}
+button{border:0;border-radius:999px;padding:10px 16px;margin:6px 6px 0 0;font-size:15px;cursor:pointer;background:#222;color:#fff}
+button.alt{background:#e9e4da;color:#222}button.sm{padding:6px 12px;font-size:14px}button:disabled{opacity:.55;cursor:default}
+.res{margin-top:10px;font-size:15px;min-height:20px}.ok{color:#2a7a3a}.bad{color:#b5452b}
+/* progress */
+.pips{display:flex;gap:6px;margin-bottom:10px}.pips i{flex:1;font-style:normal;text-align:center;font-size:12px;padding:5px 0;border-radius:999px;background:#f1ede4;color:#777}
+.pips i.on{background:#222;color:#fff}.pips i.done{background:#e0c9a6;color:#222}
+.bar{height:10px;background:#f1ede4;border-radius:999px;overflow:hidden;margin:8px 0 6px}.bar i{display:block;height:100%;background:#b5452b;border-radius:999px}
+.muted{color:#777;font-size:13px}
+/* warm-up */
+.wu{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid #eee}.wu:last-child{border-bottom:0}
+.wu .q{font-size:17px}.wu .a{display:none;margin-top:4px}.wu.open .a{display:block}.wu .a b{font-size:21px}
+.rate button{background:#f1ede4;color:#222;padding:6px 10px;font-size:18px}.rate button.sel{background:#e0c9a6;outline:2px solid #b5452b}
+/* grammar */
+.pat{background:#222;color:#fff;border-radius:12px;padding:14px 16px;font-size:22px;font-weight:600;text-align:center;margin-bottom:12px}
+.ex{background:#f1ede4;border-radius:10px;padding:10px 12px;margin:8px 0;cursor:pointer}.ex b{font-size:19px}.ex .ro{margin:2px 0}
+.mis{font-size:14px;background:#fbeee9;border-radius:10px;padding:10px 12px;margin-top:12px}
+/* dialogue */
+.dl{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #eee}.dl:last-child{border-bottom:0}
+.who{flex:0 0 58px;font-size:12px;font-weight:700;text-transform:uppercase;color:#777;padding-top:6px}.dl.you .who{color:#b5452b}
+.dl .tx{flex:1}.dl .tx b{font-size:19px}.dl .ro,.dl .den{font-size:14px}.dl .den{color:#555}
+.dl.playing{background:#fbf6ec;border-radius:10px}
+body.noro .dl .ro{display:none}body.noen .dl .den{display:none}
+.hid{display:none}.dl .yp{color:#777;font-style:italic}
+/* quiz */
+.qq{padding:12px 0;border-bottom:1px solid #eee}.qq:last-child{border-bottom:0}.qq .qp{font-size:17px;margin-bottom:6px}
+.ch button{background:#f1ede4;color:#222}.ch button.right{background:#2a7a3a;color:#fff}.ch button.wrong{background:#b5452b;color:#fff}
+.tiles button{background:#f1ede4;color:#222;font-size:18px}.ans{min-height:34px;font-size:20px;border-bottom:2px dashed #e0c9a6;margin:8px 0;padding:4px 0}
+.score{font-size:18px;font-weight:600;margin-top:10px}
+/* vocab */
+.vocab h2{font-size:17px;margin:0 0 10px}.vi{background:#f1ede4;border-radius:10px;padding:8px 10px;margin-bottom:8px;cursor:pointer}
+.vi:active{background:#e0c9a6}.vi b{font-size:19px}.vi .r{color:#b5452b;font-style:italic;font-size:13px}.vi small{display:block;color:#666;font-size:13px}
+@media(min-width:1200px){body{padding-right:260px!important;max-width:1280px!important}.vocab{position:fixed;top:24px;right:20px;width:220px;max-height:calc(100vh - 48px);overflow-y:auto;box-sizing:border-box;margin:0}}
+.fin{text-align:center}.fin a{color:#b5452b;font-weight:600}
+</style></head><body>
+<div id="page"></div>
+<aside class="card vocab" id="vocab"></aside>
+<script>
+/*DATA*/
+// ===== LESSON DATA (see lessons/_template.html and README.md) =====
+const LESSON = "lesson-34";
+const TITLE = "Lesson 34: What did you do? — telling the story of your day";
+const SUB = "Week 5 wrap-up: ask 何をしましたか, then answer with full sentences that combine time, と (with), で (place), を (object), に・へ (destination) and the past 〜ました.";
+const META = {stage:1, week:5, lesson:34, total:42, review:false, prev:"lesson-33.html", prevTitle:"Lesson 33: Shall we? — invitations with 〜ませんか and 〜ましょう", next:null, nextTitle:"Lesson 35"};
+const WARM = [
+  {ref:"lesson-33:p1", jp:"いいですね。行きましょう。", ro:"Ii desu ne. Ikimashō.", en:"Sounds good. Let's go."},
+  {ref:"lesson-31:p4", jp:"週末はどこへ行きますか。", ro:"Shūmatsu wa doko e ikimasu ka.", en:"Where are you going this weekend?"},
+  {ref:"lesson-27:p3", jp:"打ち合わせは毎週月曜日です。", ro:"Uchiawase wa maishū getsuyōbi desu.", en:"Our meetings are every Monday."},
+  {ref:"lesson-20:p4", jp:"どちらがいいですか。", ro:"Dochira ga ii desu ka.", en:"Which (of the two) do you prefer?"},
+];
+const P = [
+  {jp:"週末は何をしましたか。", ro:"Shūmatsu wa nani o shimashita ka.", en:"What did you do on the weekend?", say:"しゅうまつわなにをしましたか。",
+   parts:[["週末","shūmatsu","weekend","しゅうまつ"],["は","wa","(topic: as for the weekend)","わ"],["何","nani","what","なに"],["を","o","(object)"],["しましたか","shimashita ka","did (you) do?"]],
+   note:"The classic Monday small-talk question before a meeting. 何 is read なに before を. Swap the time word: 昨日は何をしましたか。 (What did you do yesterday?)"},
+  {jp:"友達と美術館へ行きました。", ro:"Tomodachi to bijutsukan e ikimashita.", en:"I went to an art museum with a friend.", say:"ともだちとびじゅつかんえいきました。",
+   parts:[["友達","tomodachi","friend","ともだち"],["と","to","with (a person)"],["美術館","bijutsukan","art museum","びじゅつかん"],["へ","e","to (destination)","え"],["行きました","ikimashita","went","いきました"]],
+   note:"New particle: person + と = \"with\". へ marks where you went (に works too). Swap in your own: 家族と京都へ行きました。 Went alone? 一人で行きました。"},
+  {jp:"うちでゆっくり休みました。", ro:"Uchi de yukkuri yasumimashita.", en:"I took it easy at home.", say:"うちでゆっくりやすみました。",
+   parts:[["うち","uchi","home, my place"],["で","de","at (place of action)"],["ゆっくり","yukkuri","slowly, in a relaxed way"],["休みました","yasumimashita","rested","やすみました"]],
+   note:"A perfect easy answer when you didn't do much. で because resting is an action that happens at home. ゆっくり + verb = do it in a relaxed, unhurried way."},
+  {jp:"日曜日は事務所でロゴのラフを描きました。", ro:"Nichiyōbi wa jimusho de rogo no rafu o kakimashita.", en:"On Sunday I sketched logo roughs at the office.", say:"にちようびわじむしょでろごのらふをかきました。",
+   parts:[["日曜日","nichiyōbi","Sunday","にちようび"],["は","wa","(topic: as for Sunday)","わ"],["事務所","jimusho","office, studio","じむしょ"],["で","de","at (place of action)"],["ロゴ","rogo","logo","ろご"],["の","no","'s, of"],["ラフ","rafu","rough (sketch)","らふ"],["を","o","(object)"],["描きました","kakimashita","drew, sketched","かきました"]],
+   note:"A full Week 5 sentence: time → place で → object を → past verb. 描く (kaku) is \"draw\" — same sound as 書く \"write\" but a different kanji. ラフ = ラフスケッチ."},
+  {jp:"それから、駅で田中さんに会いました。", ro:"Sore kara, eki de Tanaka-san ni aimashita.", en:"After that, I met Mr. Tanaka at the station.", say:"それから、えきでたなかさんにあいました。",
+   parts:[["それから","sore kara","after that, and then"],["駅","eki","station","えき"],["で","de","at (place)"],["田中さん","Tanaka-san","Mr./Ms. Tanaka","たなかさん"],["に","ni","(the person you meet)"],["会いました","aimashita","met","あいました"]],
+   note:"それから links events in order, so you can tell a little story: 〜ました。それから、〜ました。 You meet someone に (田中さんに会います), not を."},
+];
+const V = [
+  ["買い物","kaimono","shopping (買い物をしました)","かいもの"],
+  ["散歩","sanpo","a walk, stroll (散歩しました)","さんぽ"],
+  ["掃除","sōji","cleaning (部屋を掃除しました)","そうじ"],
+  ["料理","ryōri","cooking, a dish (料理を作りました)","りょうり"],
+  ["公園","kōen","park (公園で散歩しました)","こうえん"],
+  ["家族","kazoku","family (家族と…)","かぞく"],
+];
+const G = {pattern:"(Time は) + (person と) + (place で) + (object を) + (place に・へ) + Verb-ました",
+  explain:"This week you met every piece — now put them together. A typical order is <b>time → who with → where → what → verb</b>, and the verb always comes <b>last</b>. <b>と</b> (new) means \"<b>with</b>\" a person: 友達と. <b>で</b> = where an action happens or the means (事務所で描きました). <b>を</b> = the object (ラフを). <b>に・へ</b> = where you go (美術館へ行きました) — and <b>に</b> also marks the person you meet (田中さんに会いました). Ask with <b>何を</b> (what), <b>どこで</b> (where), <b>どこへ</b> (where to), <b>誰と</b> (who with). Link past events with <b>それから</b>.",
+  examples:[["昨日は家族と公園へ行きました。","Kinō wa kazoku to kōen e ikimashita.","Yesterday I went to the park with my family.","きのうわかぞくとこうえんえいきました。"],["誰と行きましたか。","Dare to ikimashita ka.","Who did you go with?","だれといきましたか。"],["土曜日は買い物をしました。それから、映画を見ました。","Doyōbi wa kaimono o shimashita. Sore kara, eiga o mimashita.","On Saturday I went shopping. After that, I watched a movie.","どようびわかいものをしました。それから、えいがをみました。"]],
+  mistake:"✗ 友達で行きました → ✓ 友達と行きました (と = with a person; で is place/means). ✗ 事務所にラフを描きました → ✓ 事務所で (an action happens で). ✗ 田中さんを会いました → ✓ 田中さんに会いました. ✗ 週末は何をしますか for the past weekend → ✓ しましたか."};
+const DTITLE = "Monday morning: small talk with a client before the review starts.";
+const D = [
+  ["Tanaka","おはようございます。週末は何をしましたか。","Ohayō gozaimasu. Shūmatsu wa nani o shimashita ka.","Good morning. What did you do on the weekend?","おはようございます。しゅうまつわなにをしましたか。"],
+  ["you","土曜日は友達と美術館へ行きました。","Doyōbi wa tomodachi to bijutsukan e ikimashita.","On Saturday I went to an art museum with a friend.","どようびわともだちとびじゅつかんえいきました。"],
+  ["Tanaka","いいですね。日曜日は？","Ii desu ne. Nichiyōbi wa?","Nice. And Sunday?","いいですね。にちようびわ？"],
+  ["you","日曜日は事務所でロゴのラフを描きました。","Nichiyōbi wa jimusho de rogo no rafu o kakimashita.","On Sunday I sketched logo roughs at the office.","にちようびわじむしょでろごのらふをかきました。"],
+  ["Tanaka","そうですか。私はうちでゆっくり休みました。","Sō desu ka. Watashi wa uchi de yukkuri yasumimashita.","I see. I took it easy at home.","そうですか。わたしわうちでゆっくりやすみました。"],
+  ["you","じゃあ、始めましょう。こちらがラフです。","Jā, hajimemashō. Kochira ga rafu desu.","Well then, let's get started. These are the roughs.","じゃあ、はじめましょう。こちらがらふです。"],
+];
+const Q = [
+  {type:"listen", prompt:"Listen. What does it mean?", say:"しゅうまつわなにをしましたか。", choices:["What did you do on the weekend?","What will you do on the weekend?","Where did you go on the weekend?","Did you rest on the weekend?"], answer:0},
+  {type:"particle", prompt:"Fill in the blank: 友達 ___ 美術館へ行きました。 (with a friend)", choices:["と","で","を"], answer:0, explain:"Person + と = with. で is for places and means.", say:"ともだちとびじゅつかんえいきました。"},
+  {type:"particle", prompt:"Fill in the blank: 駅で田中さん ___ 会いました。", choices:["に","を","へ"], answer:0, explain:"You meet someone に: 田中さんに会います."},
+  {type:"choose", prompt:"How do you say \"I took it easy at home.\"?", choices:["うちでゆっくり休みました。","うちにゆっくり休みます。","うちへゆっくり休みませんか。"], answer:0, explain:"Resting is an action at a place → で, and it's past → 休みました.", say:"うちでゆっくりやすみました。"},
+  {type:"order", prompt:"Put the words in order: \"On Sunday I sketched logo roughs at the office.\"", tiles:["日曜日は","事務所で","ロゴのラフを","描きました"], answer:"日曜日は事務所でロゴのラフを描きました", say:"にちようびわじむしょでろごのらふをかきました。"},
+];
+const S = [
+  {prompt:"Ask a client what they did on the weekend.", jp:"週末は何をしましたか。", ro:"Shūmatsu wa nani o shimashita ka.", say:"しゅうまつわなにをしましたか。"},
+  {prompt:"Say you went to an art museum with a friend.", jp:"友達と美術館へ行きました。", ro:"Tomodachi to bijutsukan e ikimashita.", say:"ともだちとびじゅつかんえいきました。"},
+  {prompt:"Say that after that, you met Mr. Tanaka at the station.", jp:"それから、駅で田中さんに会いました。", ro:"Sore kara, eki de Tanaka-san ni aimashita.", say:"それから、えきでたなかさんにあいました。"},
+];
+/*END DATA*/
+// ---------- engine (shared by every lesson; edit data above, not below) ----------
+const $=id=>document.getElementById(id);
+const A=f=>f.includes(":")?`audio/${f.split(":")[0]}/${f.split(":")[1]}.mp3`:`audio/${LESSON}/${f}.mp3`;
+const store=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
+let cur,seq=0;
+function stopAll(){seq++;if(cur){cur.pause();cur=null}speechSynthesis.cancel();document.querySelectorAll(".playing").forEach(e=>e.classList.remove("playing"))}
+function speak(t,r=.85,done){const u=new SpeechSynthesisUtterance(t);u.lang="ja-JP";u.rate=r;if(done)u.onend=done;speechSynthesis.speak(u)}
+function play(f,t,r=.9,done,keep){if(!keep)stopAll();if(cur){cur.pause()}speechSynthesis.cancel();
+ const a=new Audio(A(f));cur=a;let fb=false;const fall=()=>{if(!fb){fb=true;speak(t,r,done)}};
+ a.onended=()=>{if(!fb&&done)done()};a.onerror=fall;a.play().catch(fall)}
+const norm=s=>s.replace(/[？?、。！!\s.,A-Za-z〜ー]/g,"");
+function score(heard,target){const t=norm(target);let m=0;for(const c of norm(heard))if(t.includes(c))m++;return t.length?Math.round(100*Math.min(m,t.length)/t.length):0}
+function mic(target,el,after){const R=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!R){el.textContent="Speech recognition isn't supported in this browser. Try Chrome.";return}
+ stopAll();const r=new R();r.lang="ja-JP";el.textContent="Listening...";
+ r.onresult=e=>{const h=e.results[0][0].transcript,s=score(h,target);
+  el.innerHTML=`I heard: <b>${h}</b><br>`+(s>=70?`<span class="ok">Nice, that's about ${s}% of it. 🎉</span>`:`<span class="bad">Close, about ${s}%. Try the slow version and go again.</span>`);if(after)after(s)};
+ r.onerror=e=>{el.textContent="Mic error: "+e.error};r.start()}
+const sayOf=(o)=>o.say||o.jp;
+// ---------- sections ----------
+function progress(){const done=store("jl-done")||[],pct=Math.round(100*META.lesson/META.total);
+ const label=META.review?`Stage ${META.stage} · Week ${META.week} review · Lesson ${META.lesson} of ${META.total}`:`Stage ${META.stage} · Week ${META.week} · Lesson ${META.lesson} of ${META.total}`;
+ return `<div class="card"><div class="pips">${[1,2,3,4,5].map(i=>`<i class="${i<META.stage?"done":i===META.stage?"on":""}">Stage ${i}</i>`).join("")}</div>
+ <b>${label}</b><div class="bar"><i style="width:${pct}%"></i></div><div class="muted" id="donec">${done.length} lesson${done.length===1?"":"s"} marked complete${done.includes(LESSON)?" · this one is done ✅":""}</div></div>`}
+function warm(){if(!WARM.length)return"";const rates=store("jl-rate")||{};
+ return `<h2 class="sh">① Warm-up review</h2><p class="shd">Read the English and try to say it in Japanese, then tap <b>Show</b> to check and hear it. Rate how well you knew it.</p><div class="card">${WARM.map((w,k)=>`<div class="wu" id="wu${k}"><div><div class="q">${w.en}</div><div class="a"><b>${w.jp}</b><div class="ro">${w.ro}</div></div></div>
+ <div><button class="alt sm" onclick="wuShow(${k})">Show</button><span class="rate">${["😊","😐","😕"].map(e=>`<button class="${rates[w.ref||LESSON+":r"+k]===e?"sel":""}" onclick="wuRate(${k},'${e}',this)">${e}</button>`).join("")}</span></div></div>`).join("")}</div>`}
+function wuShow(k){const w=WARM[k];$("wu"+k).classList.add("open");play(w.ref||"r"+k,sayOf(w))}
+function wuRate(k,e,b){const r=store("jl-rate")||{};r[WARM[k].ref||LESSON+":r"+k]=e;store("jl-rate",r);b.parentNode.querySelectorAll("button").forEach(x=>x.classList.toggle("sel",x===b))}
+function phrases(){if(!P.length)return"";return `<h2 class="sh">② New phrases</h2><p class="shd">Tap a word to hear it. Press ▶ to hear the whole phrase, 🐢 for slow, then 🎤 and say it back.</p>`+P.map((p,i)=>`<div class="card"><div class="jp">${i+1}. ${p.jp}</div><div class="ro">${p.ro}</div><div class="en">${p.en}</div>
+<div class="parts">${p.parts.map((x,j)=>`<div class="part" onclick="play('p${i}_w${j}',P[${i}].parts[${j}][3]||P[${i}].parts[${j}][0])"><b>${x[0]}</b>${x[1]}<br><small>${x[2]}</small></div>`).join("")}</div>
+<div class="note">${p.note}</div>
+<button onclick="play('p${i}',sayOf(P[${i}]),.9)">▶ Play</button><button class="alt" onclick="play('p${i}_slow',sayOf(P[${i}]),.5)">🐢 Slow</button><button class="alt" onclick="mic(P[${i}].jp,$('r${i}'))">🎤 Say it back</button>
+<div class="res" id="r${i}"></div></div>`).join("")}
+function grammar(){if(!G)return"";return `<h2 class="sh">③ Grammar point</h2><div class="card"><div class="pat">${G.pattern}</div><p>${G.explain}</p>
+${G.examples.map((x,k)=>`<div class="ex" onclick="play('g${k}',G.examples[${k}][3]||G.examples[${k}][0])"><b>${x[0]}</b> 🔊<div class="ro">${x[1]}</div><div>${x[2]}</div></div>`).join("")}
+${G.mistake?`<div class="mis">⚠️ <b>Common mistake:</b> ${G.mistake}</div>`:""}</div>`}
+let youMode=false;
+function dialogue(){if(!D.length)return"";return `<h2 class="sh">④ Mini dialogue</h2><p class="shd">${DTITLE||""}</p><div class="card">
+<button onclick="playAll()">▶ Play all</button><button class="alt" onclick="stopAll()">■ Stop</button><button class="alt" id="bro" onclick="document.body.classList.toggle('noro');this.textContent=document.body.classList.contains('noro')?'Show romaji':'Hide romaji'">Hide romaji</button><button class="alt" id="ben" onclick="document.body.classList.toggle('noen');this.textContent=document.body.classList.contains('noen')?'Show English':'Hide English'">Hide English</button><button class="alt" id="bym" onclick="toggleYou()">🎤 You speak mode</button>
+<div style="margin-top:10px">${D.map((d,k)=>`<div class="dl ${d[0]==="you"?"you":""}" id="dl${k}"><div class="who">${d[0]==="you"?"You":d[0]}</div><div class="tx">
+<div class="show"><b>${d[1]}</b><div class="ro">${d[2]}</div></div>${d[0]==="you"?`<div class="yp hid">Your line: say it with 🎤 <button class="alt sm" onclick="mic(D[${k}][1],$('dr${k}'))">🎤</button> <button class="alt sm" onclick="revealLine(${k})">Show</button></div>`:""}
+<div class="den">${d[3]}</div><div class="res" id="dr${k}"></div></div><button class="alt sm" onclick="playLine(${k})">▶</button></div>`).join("")}</div></div>`}
+function playLine(k,done,keep){const d=D[k];$("dl"+k).classList.add("playing");play("d"+k,d[4]||d[1],.9,()=>{$("dl"+k).classList.remove("playing");done&&done()},keep)}
+function playAll(){stopAll();const my=seq;const step=k=>{if(k>=D.length||my!==seq)return;
+ if(youMode&&D[k][0]==="you"){$("dl"+k).classList.add("playing");setTimeout(()=>{if(my===seq){$("dl"+k).classList.remove("playing");step(k+1)}},3500);return}
+ playLine(k,()=>setTimeout(()=>{if(my===seq)step(k+1)},400),true)};step(0)}
+function toggleYou(){youMode=!youMode;$("bym").textContent=youMode?"Show all lines":"🎤 You speak mode";
+ D.forEach((d,k)=>{if(d[0]!=="you")return;const l=$("dl"+k);l.querySelector(".show").classList.toggle("hid",youMode);l.querySelector(".yp").classList.toggle("hid",!youMode)})}
+function revealLine(k){$("dl"+k).querySelector(".show").classList.remove("hid")}
+let qDone={},qRight=0;const shuffled={};
+function quiz(){if(!Q.length)return"";return `<h2 class="sh">${META.review?"②":"⑤"} Quick quiz</h2><p class="shd">Instant feedback. Your best score is saved on this device.</p><div class="card">${Q.map((q,k)=>{
+ let body="";if(q.type==="order"){shuffled[k]=[...q.tiles].sort(()=>Math.random()-.5);
+  body=`<div class="ans" id="qa${k}"></div><div class="tiles" id="qt${k}">${shuffled[k].map((t,j)=>`<button onclick="tile(${k},${j},this)">${t}</button>`).join("")}</div><button class="sm" onclick="checkOrder(${k})">Check</button><button class="alt sm" onclick="resetOrder(${k})">Reset</button>`}
+ else body=(q.type==="listen"?`<button class="sm" onclick="play('q${k}',Q[${k}].say)">▶ Listen</button><br>`:"")+`<div class="ch">${q.choices.map((c,j)=>`<button onclick="answer(${k},${j},this)">${c}</button>`).join("")}</div>`;
+ return `<div class="qq"><div class="qp">${k+1}. ${q.prompt}</div>${body}<div class="res" id="qr${k}"></div></div>`}).join("")}
+ <div class="score" id="qscore">Score: 0 / ${Q.length}</div><div class="muted" id="qbest"></div></div>`}
+function qMark(k,ok){if(qDone[k])return;qDone[k]=1;if(ok)qRight++;$("qr"+k).innerHTML=ok?'<span class="ok">Correct! ✓</span>':`<span class="bad">Not quite. Answer: <b>${Q[k].type==="order"?Q[k].answer:Q[k].choices[Q[k].answer]}</b></span>`+(Q[k].explain?` · ${Q[k].explain}`:"");
+ const n=Object.keys(qDone).length;$("qscore").textContent=`Score: ${qRight} / ${Q.length}`+(n===Q.length?(qRight===Q.length?" 🎉 Perfect!":" · finished"):"");
+ if(n===Q.length){const b=store("jl-quiz")||{};b[LESSON]=Math.max(b[LESSON]||0,qRight);store("jl-quiz",b);showBest()}}
+function showBest(){const b=(store("jl-quiz")||{})[LESSON];if(b!=null&&$("qbest"))$("qbest").textContent=`Best saved score: ${b} / ${Q.length}`}
+function answer(k,j,b){if(qDone[k])return;const ok=j===Q[k].answer;b.classList.add(ok?"right":"wrong");if(!ok)b.parentNode.children[Q[k].answer].classList.add("right");if(Q[k].say&&Q[k].type!=="listen")play("q"+k,Q[k].say);qMark(k,ok)}
+function tile(k,j,b){if(qDone[k])return;b.disabled=true;$("qa"+k).textContent+=shuffled[k][j]}
+function resetOrder(k){if(qDone[k])return;$("qa"+k).textContent="";$("qt"+k).querySelectorAll("button").forEach(b=>b.disabled=false)}
+function checkOrder(k){if(qDone[k])return;const ok=norm($("qa"+k).textContent)===norm(Q[k].answer);qMark(k,ok);if(Q[k].say)play("q"+k,Q[k].say)}
+function speakback(){if(!S.length)return"";return `<h2 class="sh">⑥ Speak-back practice</h2><p class="shd">Read the English, answer out loud with 🎤, then reveal the target answer.</p><div class="card">${S.map((s,k)=>`<div class="qq"><div class="qp">${k+1}. ${s.prompt}</div>
+<button class="sm" onclick="mic(S[${k}].jp,$('sr${k}'),()=>sbShow(${k}))">🎤 Answer</button><button class="alt sm" onclick="sbShow(${k})">Show answer</button>
+<div class="res" id="sr${k}"></div><div class="hid" id="sa${k}"><b style="font-size:19px">${s.jp}</b> <button class="alt sm" onclick="play('s${k}',sayOf(S[${k}]))">▶</button><div class="ro">${s.ro}</div></div></div>`).join("")}</div>`}
+function sbShow(k){$("sa"+k).classList.remove("hid")}
+function finish(){const done=(store("jl-done")||[]).includes(LESSON);return `<div class="card fin"><button id="bdone" onclick="markDone()">${done?"✅ Lesson complete":"Mark lesson complete"}</button>
+<p>${META.prev?`<a href="${META.prev}">← ${META.prevTitle||"Previous lesson"}</a>`:""}${META.prev&&META.next?" &nbsp;·&nbsp; ":""}${META.next?`<a href="${META.next}">Next: ${META.nextTitle||"tomorrow's lesson"} →</a>`:"<span class='muted'>The next lesson is coming soon.</span>"}</p></div>`}
+function markDone(){const d=store("jl-done")||[];if(!d.includes(LESSON))d.push(LESSON);store("jl-done",d);$("bdone").textContent="✅ Lesson complete";
+ $("donec").textContent=`${d.length} lesson${d.length===1?"":"s"} marked complete · this one is done ✅`}
+function vocab(){if(!V.length){$("vocab").remove();return}
+ $("vocab").innerHTML='<h2>Extra vocabulary</h2>'+V.map((v,k)=>`<div class="vi" onclick="play('v${k}',V[${k}][3]||V[${k}][0])"><b>${v[0]}</b> <span class="r">${v[1]}</span><small>${v[2]}</small></div>`).join("")}
+document.title=TITLE;
+$("page").innerHTML=`<h1>${TITLE}</h1><p class="sub">${SUB}</p>`+progress()+warm()+(META.review?quiz():phrases()+grammar()+dialogue()+quiz()+speakback())+finish();
+vocab();showBest();
+</script>
+<script src="../nav.js"></script>
+</body></html>
