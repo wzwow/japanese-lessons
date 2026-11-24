@@ -37,6 +37,7 @@ const NAV = [
   { title: "Lesson 32: Where and how? — place and means with で", href: "lessons/lesson-32.html" },
   { title: "Lesson 33: Shall we? — invitations with 〜ませんか and 〜ましょう", href: "lessons/lesson-33.html" },
   { title: "Lesson 34: What did you do? — telling the story of your day", href: "lessons/lesson-34.html" },
+  { title: "Lesson 35: Week 5 review", href: "lessons/lesson-35.html" },
 ];
 (function () {
   const base = new URL(".", document.currentScript.src); // repo root, wherever it's hosted
