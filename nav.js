@@ -39,6 +39,7 @@ const NAV = [
   { title: "Lesson 34: What did you do? — telling the story of your day", href: "lessons/lesson-34.html" },
   { title: "Lesson 35: Week 5 review", href: "lessons/lesson-35.html" },
   { title: "Lesson 36: Bright, not dark — describing design with adjectives", href: "lessons/lesson-36.html" },
+  { title: "Lesson 37: I like simple designs — saying what you like with 好き", href: "lessons/lesson-37.html" },
 ];
 (function () {
   const base = new URL(".", document.currentScript.src); // repo root, wherever it's hosted
